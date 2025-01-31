@@ -1,7 +1,11 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import ky from "ky";
+import dotenv from "dotenv";
 
-const app = new Hono();
+dotenv.config();
+
+const app = new Hono().basePath("/api");
 
 // 미들웨어 설정
 app.use("*", async (c, next) => {
@@ -16,8 +20,23 @@ app.get("/", (c) => {
   });
 });
 
+app.post("/token", async (c) => {
+  const { code } = await c.req.json();
+  const { access_token } = await ky
+    .post("https://discord.com/api/oauth2/token", {
+      body: new URLSearchParams({
+        client_id: process.env.DISCORD_CLIENT_ID!,
+        client_secret: process.env.DISCORD_CLIENT_SECRERT!,
+        grant_type: "authorization_code",
+        code,
+      }),
+    })
+    .json<any>();
+  return c.json({ access_token });
+});
+
 // 서버 시작
-const port = 3000;
+const port = 1945;
 console.log(`Server is running on port ${port}`);
 
 serve({

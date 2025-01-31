@@ -8,7 +8,9 @@
   "type": "module",
   "dependencies": {
     "@hono/node-server": "^1.13.7",
-    "hono": "^4.6.19"
+    "dotenv": "^16.4.7",
+    "hono": "^4.6.19",
+    "ky": "^1.7.4"
   },
   "devDependencies": {
     "@types/node": "^22.12.0",
