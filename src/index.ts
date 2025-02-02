@@ -26,7 +26,7 @@ app.post("/token", async (c) => {
     .post("https://discord.com/api/oauth2/token", {
       body: new URLSearchParams({
         client_id: process.env.DISCORD_CLIENT_ID!,
-        client_secret: process.env.DISCORD_CLIENT_SECRERT!,
+        client_secret: process.env.DISCORD_CLIENT_SECRET!,
         grant_type: "authorization_code",
         code,
       }),
